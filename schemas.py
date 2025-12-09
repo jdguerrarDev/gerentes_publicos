@@ -89,30 +89,6 @@ class UsuarioCompromisoAsignacionResponse(BaseModel):
 
 
 # ============================================
-# RESUMEN DE COMPROMISOS Y ACCIONES
-# ============================================
-class ResumenCompromisoResponse(BaseModel):
-    compromiso_id: int
-    compromiso_nombre: str
-    compromiso_peso: float
-    acciones_seleccionadas: int
-    peso_total_acciones: float
-    peso_real_en_total: float
-    acciones: List[AccionSeleccionResponse]
-    innovaciones: List[AccionInnovacionResponse]
-
-
-class ResumenUsuarioResponse(BaseModel):
-    usuario_id: int
-    usuario_email: str
-    rol_id: int
-    rol_nombre: str
-    ubicacion: str
-    total_compromisos: int
-    compromisos: List[ResumenCompromisoResponse]
-
-
-# ============================================
 # VALIDACIÓN DE PESOS
 # ============================================
 class ValidacionPesosResponse(BaseModel):
@@ -123,6 +99,68 @@ class ValidacionPesosResponse(BaseModel):
     peso_real_en_total: float
     es_valido: bool
     mensaje: str
+
+    class Config:
+        from_attributes = True
+
+
+# ============================================
+# ESTADÍSTICAS
+# ============================================
+class EstadisticasRolesResponse(BaseModel):
+    subdirectores_centro: int
+    directores_regional: int
+    total: int
+
+
+# ============================================
+# AUTENTICACIÓN
+# ============================================
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+class LoginResponse(BaseModel):
+    access_token: str
+    token_type: str
+    usuario_id: int
+    email: str
+    roles: List[str]
+
+
+# ============================================
+# RESUMEN DE USUARIO
+# ============================================
+class AccionResumenResponse(BaseModel):
+    id: int
+    nombre: str
+    peso_porcentual_usuario: float
+
+    class Config:
+        from_attributes = True
+
+
+class CompromisoResumenResponse(BaseModel):
+    id: int
+    nombre: str
+    peso_porcentual: float
+    acciones_seleccionadas: List[AccionResumenResponse]
+    suma_pesos: float
+    estado_completo: bool
+
+    class Config:
+        from_attributes = True
+
+
+class UsuarioResumenResponse(BaseModel):
+    id: int
+    nombre: str  # Usa email del usuario
+    email: str
+    rol: str
+    regional: Optional[str]
+    centro: Optional[str]
+    compromisos: List[CompromisoResumenResponse]
 
     class Config:
         from_attributes = True
