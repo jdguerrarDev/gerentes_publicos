@@ -1,6 +1,6 @@
 [project]
-name = "gerentes-publicos"
-version = "0.1.0"
+name = "gerentes-publicos-api"
+version = "1.0.0"
 description = "API para gestión de compromisos y acciones"
 requires-python = ">=3.11"
 dependencies = [
@@ -10,11 +10,4 @@ dependencies = [
     "sqlalchemy==2.0.23",
     "pydantic==2.5.0",
     "pydantic-settings==2.1.0",
-]
-
-[tool.uv]
-dev-dependencies = [
-    "pytest==7.4.3",
-    "httpx==0.25.2",
-    "pytest-asyncio==0.21.1",
 ]
